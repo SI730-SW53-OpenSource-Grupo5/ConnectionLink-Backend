@@ -24,22 +24,6 @@ public class Appointment {
     @Column(nullable = false, updatable = false)
     private Date createdAt;
 
-    @Column(nullable = false)
-    @Setter
-    private String urlCall;
-
-    @Column(nullable = false)
-    @Setter
-    private String title;
-
-    @Column(nullable = false)
-    @Setter
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name = "specialist_id", nullable = false)
-    @Setter
-    private User specialist;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -57,10 +41,6 @@ public class Appointment {
     public Appointment(CreateAppointmentCommand command, User specialist, User user, Calendar calendar)
     {
         this.createdAt = command.createdAt();
-        this.urlCall = command.urlCall();
-        this.title = command.title();
-        this.description = command.description();
-        this.specialist = specialist;
         this.user = user;
         this.calendar = calendar;
     }
