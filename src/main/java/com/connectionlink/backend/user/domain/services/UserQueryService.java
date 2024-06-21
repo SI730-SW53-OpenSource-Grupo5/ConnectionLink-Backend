@@ -1,5 +1,7 @@
 package com.connectionlink.backend.user.domain.services;
 
+import com.connectionlink.backend.authuser.domain.model.aggregates.UserAuth;
+import com.connectionlink.backend.authuser.domain.model.queries.GetUserByEmailQuery;
 import com.connectionlink.backend.user.domain.model.aggregates.User;
 import com.connectionlink.backend.user.domain.model.queries.*;
 
