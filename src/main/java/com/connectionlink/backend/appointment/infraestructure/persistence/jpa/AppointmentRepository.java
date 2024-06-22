@@ -12,7 +12,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     Optional<Appointment> findAppointmentById(Long id);
 
-    List<Appointment> findAllBySpecialistUsername(String specialistUsername);
+    List<Appointment> findAllByCalendarSpecialistUsername(String specialistUsername);
 
     List<Appointment> findAllByUserUsername(String userUsername);
 

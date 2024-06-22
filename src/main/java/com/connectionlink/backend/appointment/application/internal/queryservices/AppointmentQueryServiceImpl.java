@@ -4,6 +4,8 @@ import com.connectionlink.backend.appointment.domain.model.aggregates.Appointmen
 import com.connectionlink.backend.appointment.domain.model.queries.*;
 import com.connectionlink.backend.appointment.domain.services.AppointmentQueryService;
 import com.connectionlink.backend.appointment.infraestructure.persistence.jpa.AppointmentRepository;
+import com.connectionlink.backend.calendar.domain.model.queries.GetAllCalendarBySpecialistUsernameQuery;
+import com.connectionlink.backend.calendar.infrastructure.persistence.jpa.CalendarRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class AppointmentQueryServiceImpl implements AppointmentQueryService {
 
     private final AppointmentRepository appointmentRepository;
+    private final CalendarRepository calendarRepository;
 
-    public AppointmentQueryServiceImpl(AppointmentRepository appointmentRepository) {
+    public AppointmentQueryServiceImpl(AppointmentRepository appointmentRepository, CalendarRepository calendarRepository) {
         this.appointmentRepository = appointmentRepository;
+        this.calendarRepository = calendarRepository;
     }
 
     @Override
@@ -25,7 +29,7 @@ public class AppointmentQueryServiceImpl implements AppointmentQueryService {
 
     @Override
     public List<Appointment> handle(GetAllAppointmentBySpecialistUsernameQuery query) {
-        return this.appointmentRepository.findAllBySpecialistUsername(query.specialistUsername());
+       return this.appointmentRepository.findAllByCalendarSpecialistUsername(query.specialistUsername());
     }
 
     @Override

@@ -12,10 +12,13 @@ public class AppointmentResourceFromEntityAssembler {
     public static AppointmentResource toResourceFromEntity(Appointment entity) {
         UserResource user = UserResourceFromEntityAssembler.toResourceFromEntity(entity.getUser());
 
-        UserResource specialist = UserResourceFromEntityAssembler.toResourceFromEntity(entity.getSpecialist());
-
         CalendarResource calendar = CalendarResourceFromEntityAssembler.toResourceFromEntity(entity.getCalendar());
 
-        return new AppointmentResource(entity.getId(), entity.getCreatedAt(), entity.getUrlCall(), entity.getTitle(), entity.getDescription(), specialist, user, calendar);
+        return new AppointmentResource(
+                entity.getId(),
+                entity.getCreatedAt(),
+                entity.getUpdatedAt(),
+                user,
+                calendar);
     }
 }
