@@ -1,6 +1,6 @@
 package com.connectionlink.backend.forum.interfaces.rest.resources;
 
-import com.connectionlink.backend.user.interfaces.rest.resources.UserResource;
+import com.connectionlink.backend.iam.interfaces.rest.resources.UserResource;
 
 import java.util.Date;
 import java.util.List;

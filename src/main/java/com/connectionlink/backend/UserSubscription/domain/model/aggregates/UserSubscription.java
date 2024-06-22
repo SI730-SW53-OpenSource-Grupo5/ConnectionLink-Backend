@@ -1,6 +1,6 @@
 package com.connectionlink.backend.UserSubscription.domain.model.aggregates;
 
-import com.connectionlink.backend.user.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
 import com.connectionlink.backend.Subscription.domain.model.aggregates.Subscription;
 import jakarta.persistence.*;
 import lombok.Getter;

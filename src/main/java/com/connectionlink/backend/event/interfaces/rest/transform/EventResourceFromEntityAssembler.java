@@ -4,8 +4,8 @@ import com.connectionlink.backend.category.interfaces.rest.resources.CategoryRes
 import com.connectionlink.backend.category.interfaces.rest.transform.CategoryResourceFromEntityAssembler;
 import com.connectionlink.backend.event.domain.model.aggregates.Event;
 import com.connectionlink.backend.event.interfaces.rest.resources.EventResource;
-import com.connectionlink.backend.user.interfaces.rest.resources.UserResource;
-import com.connectionlink.backend.user.interfaces.rest.transform.UserResourceFromEntityAssembler;
+import com.connectionlink.backend.iam.interfaces.rest.resources.UserResource;
+import com.connectionlink.backend.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
 
 import java.util.List;
 

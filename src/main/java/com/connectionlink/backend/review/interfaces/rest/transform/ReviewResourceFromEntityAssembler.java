@@ -2,7 +2,7 @@ package com.connectionlink.backend.review.interfaces.rest.transform;
 
 import com.connectionlink.backend.review.domain.model.aggregates.Review;
 import com.connectionlink.backend.review.interfaces.rest.resources.ReviewResource;
-import com.connectionlink.backend.user.interfaces.rest.transform.UserResourceFromEntityAssembler;
+import com.connectionlink.backend.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
 
 public class ReviewResourceFromEntityAssembler {
     public static ReviewResource toCommandFromResource(Review entity) {

@@ -4,11 +4,9 @@ import com.connectionlink.backend.forum.domain.model.aggregates.Post;
 import com.connectionlink.backend.forum.domain.model.commands.CreatePostCommand;
 import com.connectionlink.backend.forum.domain.model.commands.RemovePostCommand;
 import com.connectionlink.backend.forum.domain.services.PostCommandService;
-import com.connectionlink.backend.forum.infraestructure.persistence.jpa.CommentRepository;
 import com.connectionlink.backend.forum.infraestructure.persistence.jpa.PostRepository;
-import com.connectionlink.backend.forum.interfaces.rest.resources.RemovePostResource;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

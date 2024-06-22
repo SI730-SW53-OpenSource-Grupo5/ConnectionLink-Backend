@@ -1,7 +1,7 @@
 package com.connectionlink.backend.calendar.domain.model.aggregates;
 
 import com.connectionlink.backend.calendar.domain.model.commands.CreateCalendarCommand;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

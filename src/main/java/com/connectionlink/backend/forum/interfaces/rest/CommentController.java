@@ -9,8 +9,8 @@ import com.connectionlink.backend.forum.interfaces.rest.resources.CommentResourc
 import com.connectionlink.backend.forum.interfaces.rest.resources.CreateCommentResource;
 import com.connectionlink.backend.forum.interfaces.rest.transform.CommentResourceFromEntityAssembler;
 import com.connectionlink.backend.forum.interfaces.rest.transform.CreateCommentCommandFromResourceAssembler;
-import com.connectionlink.backend.user.interfaces.rest.resources.UserResource;
-import com.connectionlink.backend.user.interfaces.rest.transform.UserResourceFromEntityAssembler;
+import com.connectionlink.backend.iam.interfaces.rest.resources.UserResource;
+import com.connectionlink.backend.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

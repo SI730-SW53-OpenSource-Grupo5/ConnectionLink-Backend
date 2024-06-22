@@ -3,8 +3,8 @@ package com.connectionlink.backend.forum.interfaces.rest.transform;
 import com.connectionlink.backend.forum.domain.model.aggregates.Post;
 import com.connectionlink.backend.forum.interfaces.rest.resources.CommentResource;
 import com.connectionlink.backend.forum.interfaces.rest.resources.PostResource;
-import com.connectionlink.backend.user.interfaces.rest.resources.UserResource;
-import com.connectionlink.backend.user.interfaces.rest.transform.UserResourceFromEntityAssembler;
+import com.connectionlink.backend.iam.interfaces.rest.resources.UserResource;
+import com.connectionlink.backend.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
 
 import java.util.List;
 

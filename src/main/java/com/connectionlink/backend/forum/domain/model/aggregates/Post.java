@@ -1,7 +1,7 @@
 package com.connectionlink.backend.forum.domain.model.aggregates;
 
 import com.connectionlink.backend.forum.domain.model.commands.CreatePostCommand;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;

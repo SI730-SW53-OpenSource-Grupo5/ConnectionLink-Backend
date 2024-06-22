@@ -9,8 +9,8 @@ import com.connectionlink.backend.event.domain.model.commands.RemoveUserCommand;
 import com.connectionlink.backend.event.domain.model.commands.UpdateEventCommand;
 import com.connectionlink.backend.event.domain.services.EventCommandService;
 import com.connectionlink.backend.event.infrastructure.persitence.jpa.EventRepository;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

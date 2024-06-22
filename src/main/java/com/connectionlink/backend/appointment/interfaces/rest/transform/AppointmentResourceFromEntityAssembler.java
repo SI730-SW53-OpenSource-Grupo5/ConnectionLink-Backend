@@ -4,8 +4,8 @@ import com.connectionlink.backend.appointment.domain.model.aggregates.Appointmen
 import com.connectionlink.backend.appointment.interfaces.rest.resources.AppointmentResource;
 import com.connectionlink.backend.calendar.interfaces.rest.resources.CalendarResource;
 import com.connectionlink.backend.calendar.interfaces.rest.transform.CalendarResourceFromEntityAssembler;
-import com.connectionlink.backend.user.interfaces.rest.resources.UserResource;
-import com.connectionlink.backend.user.interfaces.rest.transform.UserResourceFromEntityAssembler;
+import com.connectionlink.backend.iam.interfaces.rest.resources.UserResource;
+import com.connectionlink.backend.iam.interfaces.rest.transform.UserResourceFromEntityAssembler;
 
 public class AppointmentResourceFromEntityAssembler {
 
