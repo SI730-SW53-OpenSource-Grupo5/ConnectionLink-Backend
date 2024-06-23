@@ -10,7 +10,7 @@ public class CommentResourceFromEntityAssembler {
 
     public static CommentResource toResourceFromEntity(Comment entity) {
 
-        PostResource post = PostResourceFromEntityAssembler.toResourceFromEntity(entity.getPost());
+        Long postId = entity.getPost().getId();
         UserResource user = UserResourceFromEntityAssembler.toResourceFromEntity(entity.getUser());
 
         return new CommentResource(
@@ -18,7 +18,7 @@ public class CommentResourceFromEntityAssembler {
                 entity.getContent(),
                 entity.getLikes(),
                 entity.getCreatedAt(),
-                post.Id(),
+                postId,
                 user
         );
     }
