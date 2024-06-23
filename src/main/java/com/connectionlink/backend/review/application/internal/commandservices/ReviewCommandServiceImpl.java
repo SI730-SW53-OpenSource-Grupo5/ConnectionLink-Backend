@@ -1,5 +1,7 @@
 package com.connectionlink.backend.review.application.internal.commandservices;
 
+import com.connectionlink.backend.notification.domain.model.commands.CreateNotificationCommand;
+import com.connectionlink.backend.notification.domain.services.NotificationCommandService;
 import com.connectionlink.backend.review.domain.model.aggregates.Review;
 import com.connectionlink.backend.review.domain.model.commands.CreateReviewCommand;
 import com.connectionlink.backend.review.domain.services.ReviewCommandService;
@@ -15,9 +17,11 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
-    public ReviewCommandServiceImpl(ReviewRepository reviewRepository, UserRepository userRepository) {
+    private final NotificationCommandService notificationCommandService;
+    public ReviewCommandServiceImpl(ReviewRepository reviewRepository, UserRepository userRepository, NotificationCommandService notificationCommandService) {
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
+        this.notificationCommandService = notificationCommandService;
     }
 
     @Override
@@ -35,6 +39,8 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
         Review review = new Review(command, specialist, user);
 
         var reviewSaved = this.reviewRepository.save(review);
+        this.notificationCommandService.handle(new CreateNotificationCommand( "Se registro su review con exito.",  "Haz realizado un review al Especialist: " + specialist.getUsername() + ".","/specialist/" + specialist.getUsername(), command.userUsername()));
+        this.notificationCommandService.handle(new CreateNotificationCommand( "Te han realizado un review.",  "El usuario " + user.getUsername() + " te ha realizado un review.","/specialist/" + specialist.getUsername(), command.specialistUsername()));
 
         return Optional.of(reviewSaved);
     }

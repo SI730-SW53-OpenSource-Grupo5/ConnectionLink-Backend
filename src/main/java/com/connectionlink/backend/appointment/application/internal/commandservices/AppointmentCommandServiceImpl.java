@@ -10,6 +10,8 @@ import com.connectionlink.backend.calendar.domain.model.aggregates.Calendar;
 import com.connectionlink.backend.calendar.infrastructure.persistence.jpa.CalendarRepository;
 import com.connectionlink.backend.iam.domain.model.aggregates.User;
 import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.notification.domain.model.commands.CreateNotificationCommand;
+import com.connectionlink.backend.notification.domain.services.NotificationCommandService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,11 +24,13 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
     private final UserRepository userRepository;
 
     private final CalendarRepository calendarRepository;
+    private final NotificationCommandService notificationCommandService;
 
-    public AppointmentCommandServiceImpl(AppointmentRepository appointmentRepository, UserRepository userRepository, CalendarRepository calendarRepository) {
+    public AppointmentCommandServiceImpl(AppointmentRepository appointmentRepository, UserRepository userRepository, CalendarRepository calendarRepository, NotificationCommandService notificationCommandService) {
         this.appointmentRepository = appointmentRepository;
         this.userRepository = userRepository;
         this.calendarRepository = calendarRepository;
+        this.notificationCommandService = notificationCommandService;
     }
 
 
@@ -44,6 +48,8 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
         Appointment appointment = new Appointment(command, user, calendar);
 
         var appointmentSaved = this.appointmentRepository.save(appointment);
+        this.notificationCommandService.handle(new CreateNotificationCommand( "Se registro su appoiment con el espceialist: " +calendar.getSpecialist().getUsername() + ".(" + calendar.getDay().getDay() + " - " + calendar.getHour().getHour() + ")",  "Puedes ver tu Schedule para visualizar tu appoinment.","/calendar/", user.getUsername()));
+        this.notificationCommandService.handle(new CreateNotificationCommand( user.getUsername() + " ha registrado un appoinment. (" + calendar.getDay().getDay() + " - " + calendar.getHour().getHour() + ")",  "Puedes ver tu Schedule para visualizar tu appoinment.","/calendar/", calendar.getSpecialist().getUsername()));
 
         return Optional.of(appointmentSaved);
     }

@@ -8,6 +8,8 @@ import com.connectionlink.backend.forum.infraestructure.persistence.jpa.CommentR
 import com.connectionlink.backend.forum.infraestructure.persistence.jpa.PostRepository;
 import com.connectionlink.backend.iam.domain.model.aggregates.User;
 import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.notification.domain.model.commands.CreateNotificationCommand;
+import com.connectionlink.backend.notification.domain.services.NotificationCommandService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,13 +20,15 @@ public class CommentCommandServiceImpl implements CommentCommandService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final NotificationCommandService notificationCommandService;
 
     public CommentCommandServiceImpl(CommentRepository commentRepository,
                                      UserRepository userRepository,
-                                     PostRepository postRepository) {
+                                     PostRepository postRepository, NotificationCommandService notificationCommandService) {
         this.commentRepository = commentRepository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.notificationCommandService = notificationCommandService;
     }
 
     // method to create a comment in the database
@@ -37,6 +41,7 @@ public class CommentCommandServiceImpl implements CommentCommandService {
         Comment comment = new Comment(command, user, post);
 
         var commentSaved = this.commentRepository.save(comment);
+        this.notificationCommandService.handle(new CreateNotificationCommand( "Se registro su comentario con exito.",  "Haz realizado un comentario al Post: " + post.getTitle() + ".","/forums/" + post.getId(), user.getUsername()));
 
         return Optional.of(commentSaved);
     }
