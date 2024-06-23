@@ -90,6 +90,18 @@ public class EventController {
         return ResponseEntity.ok(eventsResource);
     }
 
+    @GetMapping("/specialist/username/{username}")
+    public ResponseEntity<List<EventResource>> getAllEventBySpecialistUsername(@PathVariable String username) {
+        List<Event> events = eventQueryService.handle(new GetAllEventBySpecialistUsernameQuery(username));
+
+        if(events.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        List<EventResource> eventsResource = events.stream().map(EventResourceFromEntityAssembler::toResourceFromEntity).toList();
+        return ResponseEntity.ok(eventsResource);
+    }
+
     @GetMapping("/category/{id}")
     public ResponseEntity<List<EventResource>> getAllEventByCategoryId(@PathVariable Long id) {
         List<Event> events = eventQueryService.handle(new GetAllEventByCategoryIdQuery(id));
