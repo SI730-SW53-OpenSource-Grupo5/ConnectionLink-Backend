@@ -15,5 +15,7 @@ public interface EventQueryService {
 
     List<Event> handle(GetAllEventByUserUsernameQuery query);
 
+    List<Event> handle(GetAllEventBySpecialistUsernameQuery query);
+
     List<Event> handle(GetAllEventQuery query);
 }

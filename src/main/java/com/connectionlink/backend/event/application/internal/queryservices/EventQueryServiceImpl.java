@@ -38,6 +38,11 @@ public class EventQueryServiceImpl implements EventQueryService {
     }
 
     @Override
+    public List<Event> handle(GetAllEventBySpecialistUsernameQuery query) {
+        return this.eventRepository.findBySpecialistUsername(query.username());
+    }
+
+    @Override
     public List<Event> handle(GetAllEventQuery query) {
         return this.eventRepository.findAll();
     }
