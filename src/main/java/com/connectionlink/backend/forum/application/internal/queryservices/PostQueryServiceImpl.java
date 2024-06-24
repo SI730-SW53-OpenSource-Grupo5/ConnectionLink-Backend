@@ -33,7 +33,7 @@ public class PostQueryServiceImpl implements PostQueryService {
 
     @Override
     public Optional<Post> handle(GetPostByIdQuery query) {
-        return this.postRepository.findPostByUserId(query.postId());
+        return this.postRepository.findById(query.postId());
     }
 
 
