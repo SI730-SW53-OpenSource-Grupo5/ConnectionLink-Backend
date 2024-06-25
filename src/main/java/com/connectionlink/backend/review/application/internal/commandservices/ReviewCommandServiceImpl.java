@@ -32,6 +32,7 @@ public class ReviewCommandServiceImpl implements ReviewCommandService {
         if(!specialist.getIsSpecialistUser()) {
             throw new IllegalArgumentException("The user entered is not that of a specialist ");
         }
+
         if(user.getUsername() == specialist.getUsername()) {
             throw new IllegalArgumentException("The user cannot make the same review ");
         }

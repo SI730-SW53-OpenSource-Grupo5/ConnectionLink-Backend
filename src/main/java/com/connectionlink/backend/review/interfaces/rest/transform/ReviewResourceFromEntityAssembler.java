@@ -6,6 +6,6 @@ import com.connectionlink.backend.iam.interfaces.rest.transform.UserResourceFrom
 
 public class ReviewResourceFromEntityAssembler {
     public static ReviewResource toCommandFromResource(Review entity) {
-        return new ReviewResource(entity.getId(), entity.getDescription(), UserResourceFromEntityAssembler.toResourceFromEntity(entity.getUser()), UserResourceFromEntityAssembler.toResourceFromEntity(entity.getSpecialist()));
+        return new ReviewResource(entity.getId(), entity.getDescription(), UserResourceFromEntityAssembler.toResourceFromEntity(entity.getSpecialist()), UserResourceFromEntityAssembler.toResourceFromEntity(entity.getUser()));
     }
 }

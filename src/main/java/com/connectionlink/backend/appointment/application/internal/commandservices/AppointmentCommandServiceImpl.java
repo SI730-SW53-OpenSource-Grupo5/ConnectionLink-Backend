@@ -43,6 +43,7 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
             throw new IllegalArgumentException("Calendar is not available");
         } else {
             calendar.setIsAvailable(false);
+            calendarRepository.save(calendar);
         }
 
         Appointment appointment = new Appointment(command, user, calendar);
@@ -72,6 +73,12 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
     @Override
     public Optional<Appointment> handle(DeleteAppointmentCommand command){
         Appointment appointmentExist = this.appointmentRepository.findById(command.id()).orElseThrow(() -> new IllegalArgumentException("Appointment not found"));
+        Calendar calendar = this.calendarRepository.findById(appointmentExist.getCalendar().getId()).orElseThrow(() -> new IllegalArgumentException("Calendar not found"));
+
+        if(!calendar.getIsAvailable()) {
+            calendar.setIsAvailable(true);
+            calendarRepository.save(calendar);
+        }
 
         this.appointmentRepository.delete(appointmentExist);
 
