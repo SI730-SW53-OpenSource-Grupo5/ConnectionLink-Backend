@@ -1,8 +1,7 @@
 package com.connectionlink.backend.review.domain.model.aggregates;
 
 import com.connectionlink.backend.review.domain.model.commands.CreateReviewCommand;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.domain.model.commands.CreateUserCommand;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

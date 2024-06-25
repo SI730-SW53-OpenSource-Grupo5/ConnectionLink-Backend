@@ -4,11 +4,11 @@ import com.connectionlink.backend.forum.domain.model.aggregates.Post;
 import com.connectionlink.backend.forum.domain.model.commands.CreatePostCommand;
 import com.connectionlink.backend.forum.domain.model.commands.RemovePostCommand;
 import com.connectionlink.backend.forum.domain.services.PostCommandService;
-import com.connectionlink.backend.forum.infraestructure.persistence.jpa.CommentRepository;
 import com.connectionlink.backend.forum.infraestructure.persistence.jpa.PostRepository;
-import com.connectionlink.backend.forum.interfaces.rest.resources.RemovePostResource;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.notification.domain.model.commands.CreateNotificationCommand;
+import com.connectionlink.backend.notification.domain.services.NotificationCommandService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,11 +18,13 @@ public class PostCommandServiceImpl implements PostCommandService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final NotificationCommandService notificationCommandService;
 
-    public PostCommandServiceImpl( UserRepository userRepository,
-                                  PostRepository postRepository) {
+    public PostCommandServiceImpl(UserRepository userRepository,
+                                  PostRepository postRepository, NotificationCommandService notificationCommandService) {
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.notificationCommandService = notificationCommandService;
     }
 
     // method to create a postId in the database
@@ -34,6 +36,7 @@ public class PostCommandServiceImpl implements PostCommandService {
         Post post = new Post(command, user);
 
         var postSaved = this.postRepository.save(post);
+        this.notificationCommandService.handle(new CreateNotificationCommand( "Se registro su post con exito.",  "Haz realizado un post: " + postSaved.getTitle() + ".","/forums/" + postSaved.getId(), user.getUsername()));
 
         return Optional.of(postSaved);
     }

@@ -9,8 +9,8 @@ import com.connectionlink.backend.UserSubscription.domain.model.commands.RemoveU
 import com.connectionlink.backend.UserSubscription.domain.model.commands.RenewUserSubscriptionCommand;
 import com.connectionlink.backend.UserSubscription.domain.services.UserSubscriptionCommandService;
 import com.connectionlink.backend.UserSubscription.infrastructure.persitence.jpa.UserSubscriptionRepository;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

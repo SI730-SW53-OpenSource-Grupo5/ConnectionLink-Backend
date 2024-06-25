@@ -1,13 +1,12 @@
 package com.connectionlink.backend.notification.application.internal.commandservices;
 
-import com.connectionlink.backend.notification.application.internal.queryservices.NotificationQueryServiceImpl;
 import com.connectionlink.backend.notification.domain.model.aggregates.Notification;
 import com.connectionlink.backend.notification.domain.model.commands.CreateNotificationCommand;
 import com.connectionlink.backend.notification.domain.model.commands.UpdateNotificationCommand;
 import com.connectionlink.backend.notification.domain.services.NotificationCommandService;
 import com.connectionlink.backend.notification.infrastructure.persistence.jpa.NotificationRepository;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

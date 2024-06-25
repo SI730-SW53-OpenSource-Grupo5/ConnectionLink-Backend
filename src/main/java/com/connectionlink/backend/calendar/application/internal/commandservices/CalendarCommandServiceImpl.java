@@ -11,8 +11,8 @@ import com.connectionlink.backend.calendar.domain.services.CalendarCommandServic
 import com.connectionlink.backend.calendar.infrastructure.persistence.jpa.CalendarRepository;
 import com.connectionlink.backend.calendar.infrastructure.persistence.jpa.DayRepository;
 import com.connectionlink.backend.calendar.infrastructure.persistence.jpa.HourRepository;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;

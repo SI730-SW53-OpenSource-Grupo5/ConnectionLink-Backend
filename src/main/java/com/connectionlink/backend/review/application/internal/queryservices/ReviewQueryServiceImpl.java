@@ -6,7 +6,6 @@ import com.connectionlink.backend.review.domain.model.queries.GetAllReviewQuery;
 import com.connectionlink.backend.review.domain.model.queries.GetReviewByIdQuery;
 import com.connectionlink.backend.review.domain.services.ReviewQueryService;
 import com.connectionlink.backend.review.infrastructure.persistence.jpa.ReviewRepository;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

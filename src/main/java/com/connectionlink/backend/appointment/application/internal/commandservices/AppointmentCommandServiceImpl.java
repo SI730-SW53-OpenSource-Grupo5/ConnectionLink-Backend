@@ -8,8 +8,10 @@ import com.connectionlink.backend.appointment.domain.services.AppointmentCommand
 import com.connectionlink.backend.appointment.infraestructure.persistence.jpa.AppointmentRepository;
 import com.connectionlink.backend.calendar.domain.model.aggregates.Calendar;
 import com.connectionlink.backend.calendar.infrastructure.persistence.jpa.CalendarRepository;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.notification.domain.model.commands.CreateNotificationCommand;
+import com.connectionlink.backend.notification.domain.services.NotificationCommandService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,11 +24,13 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
     private final UserRepository userRepository;
 
     private final CalendarRepository calendarRepository;
+    private final NotificationCommandService notificationCommandService;
 
-    public AppointmentCommandServiceImpl(AppointmentRepository appointmentRepository, UserRepository userRepository, CalendarRepository calendarRepository) {
+    public AppointmentCommandServiceImpl(AppointmentRepository appointmentRepository, UserRepository userRepository, CalendarRepository calendarRepository, NotificationCommandService notificationCommandService) {
         this.appointmentRepository = appointmentRepository;
         this.userRepository = userRepository;
         this.calendarRepository = calendarRepository;
+        this.notificationCommandService = notificationCommandService;
     }
 
 
@@ -39,11 +43,14 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
             throw new IllegalArgumentException("Calendar is not available");
         } else {
             calendar.setIsAvailable(false);
+            calendarRepository.save(calendar);
         }
 
         Appointment appointment = new Appointment(command, user, calendar);
 
         var appointmentSaved = this.appointmentRepository.save(appointment);
+        this.notificationCommandService.handle(new CreateNotificationCommand( "Se registro su appoiment con el espceialist: " +calendar.getSpecialist().getUsername() + ".(" + calendar.getDay().getDay() + " - " + calendar.getHour().getHour() + ")",  "Puedes ver tu Schedule para visualizar tu appoinment.","/calendar/", user.getUsername()));
+        this.notificationCommandService.handle(new CreateNotificationCommand( user.getUsername() + " ha registrado un appoinment. (" + calendar.getDay().getDay() + " - " + calendar.getHour().getHour() + ")",  "Puedes ver tu Schedule para visualizar tu appoinment.","/calendar/", calendar.getSpecialist().getUsername()));
 
         return Optional.of(appointmentSaved);
     }
@@ -66,6 +73,12 @@ public class AppointmentCommandServiceImpl implements AppointmentCommandService 
     @Override
     public Optional<Appointment> handle(DeleteAppointmentCommand command){
         Appointment appointmentExist = this.appointmentRepository.findById(command.id()).orElseThrow(() -> new IllegalArgumentException("Appointment not found"));
+        Calendar calendar = this.calendarRepository.findById(appointmentExist.getCalendar().getId()).orElseThrow(() -> new IllegalArgumentException("Calendar not found"));
+
+        if(!calendar.getIsAvailable()) {
+            calendar.setIsAvailable(true);
+            calendarRepository.save(calendar);
+        }
 
         this.appointmentRepository.delete(appointmentExist);
 

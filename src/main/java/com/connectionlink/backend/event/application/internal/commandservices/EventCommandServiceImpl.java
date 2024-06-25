@@ -9,8 +9,12 @@ import com.connectionlink.backend.event.domain.model.commands.RemoveUserCommand;
 import com.connectionlink.backend.event.domain.model.commands.UpdateEventCommand;
 import com.connectionlink.backend.event.domain.services.EventCommandService;
 import com.connectionlink.backend.event.infrastructure.persitence.jpa.EventRepository;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.notification.domain.model.aggregates.Notification;
+import com.connectionlink.backend.notification.domain.model.commands.CreateNotificationCommand;
+import com.connectionlink.backend.notification.domain.services.NotificationCommandService;
+import com.connectionlink.backend.notification.infrastructure.persistence.jpa.NotificationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,10 +26,13 @@ public class EventCommandServiceImpl implements EventCommandService {
 
     private final CategoryRepository categoryRepository;
 
-    public EventCommandServiceImpl(EventRepository eventRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
+    private final NotificationCommandService notificationCommandService;
+
+    public EventCommandServiceImpl(EventRepository eventRepository, UserRepository userRepository, CategoryRepository categoryRepository, NotificationCommandService notificationCommandService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
+        this.notificationCommandService = notificationCommandService;
     }
 
 
@@ -33,10 +40,11 @@ public class EventCommandServiceImpl implements EventCommandService {
     public Optional<Event> handle(CreateEventCommand command) {
         Category category = this.categoryRepository.findById(command.categoryId()).orElseThrow(() -> new IllegalArgumentException("Category not found"));
         User user = this.userRepository.findByUsername(command.username()).orElseThrow(() -> new IllegalArgumentException("User not found"));
-
         Event event = new Event(command, category, user);
 
         var eventSaved = this.eventRepository.save(event);
+        this.notificationCommandService.handle(new CreateNotificationCommand(command.title() + ", se ha creado tu evento con exito.", command.description(),"/events",command.username()));
+
         return Optional.of(eventSaved);
     }
 
@@ -51,6 +59,7 @@ public class EventCommandServiceImpl implements EventCommandService {
             var eventUpdated = this.eventRepository.save(event);
             return Optional.of(eventUpdated);
         }
+        this.notificationCommandService.handle(new CreateNotificationCommand(user.getUsername() + ", va a participar en tu evento.", user.getUsername() + " va a participar en tu evento " + event.getTitle() + ".","/events",command.username()));
 
         return Optional.empty();
     }

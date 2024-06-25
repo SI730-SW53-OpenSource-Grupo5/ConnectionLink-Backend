@@ -1,11 +1,9 @@
 package com.connectionlink.backend.forum.domain.model.aggregates;
 
 import com.connectionlink.backend.forum.domain.model.commands.CreateCommentCommand;
-import com.connectionlink.backend.user.domain.model.aggregates.User;
+import com.connectionlink.backend.iam.domain.model.aggregates.User;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +21,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10000)
     @Setter
     private String content;
 

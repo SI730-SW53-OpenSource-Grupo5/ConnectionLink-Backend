@@ -6,7 +6,7 @@ import com.connectionlink.backend.notification.domain.model.queries.GetAllNotifi
 import com.connectionlink.backend.notification.domain.model.queries.GetNotificationByIdQuery;
 import com.connectionlink.backend.notification.domain.services.NotificationQueryService;
 import com.connectionlink.backend.notification.infrastructure.persistence.jpa.NotificationRepository;
-import com.connectionlink.backend.user.infrastructure.persitence.jpa.UserRepository;
+import com.connectionlink.backend.iam.infrastructure.persitence.jpa.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
